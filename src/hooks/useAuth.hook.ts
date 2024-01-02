@@ -32,7 +32,7 @@ const useAuth = () => {
         return;
       }
 
-      fetch("https://ewe-simple-polecat.ngrok-free.app/api/login", {
+      fetch(`${proccess.env.BASE_URL}/api/login`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${await userCred.user.getIdToken()}`,
@@ -55,7 +55,7 @@ const useAuth = () => {
 
     //Clear the cookies in the server
     const response = await fetch(
-      "https://ewe-simple-polecat.ngrok-free.app/api/signOut",
+      `${proccess.env.BASE_URL}/api/signOut`,
       {
         method: "POST",
       }

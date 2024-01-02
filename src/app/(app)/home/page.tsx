@@ -4,7 +4,7 @@ import { MedItem } from "@/components/MedItem";
 export interface IHomeProps {}
 const getData = async () => {
   const data = await fetch(
-    "https://ewe-simple-polecat.ngrok-free.app/api/medicines",
+    `${proccess.env.BASE_URL}/api/medicines`,
     {
       method: "GET",
       cache: "no-cache",
@@ -19,7 +19,6 @@ const Home = async (props: IHomeProps) => {
   return (
     <div className="flex flex-col gap-3 w-full">
       {data.map((med: any) => {
-        console.log("first", med.nextHours);
         return (
           <MedItem
             key={med.title}

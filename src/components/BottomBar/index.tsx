@@ -51,7 +51,7 @@ function BottomBar() {
 
   const agendar = async () => {
     const data = await fetch(
-      "https://ewe-simple-polecat.ngrok-free.app/agendar-lembrete",
+      `${proccess.env.BASE_URL}/agendar-lembrete`,
       {
         method: "POST",
         headers: {
