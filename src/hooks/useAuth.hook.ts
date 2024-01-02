@@ -32,7 +32,7 @@ const useAuth = () => {
         return;
       }
 
-      fetch(`${proccess.env.BASE_URL}/api/login`, {
+      fetch(`${process.env.BASE_URL}/api/login`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${await userCred.user.getIdToken()}`,
@@ -55,7 +55,7 @@ const useAuth = () => {
 
     //Clear the cookies in the server
     const response = await fetch(
-      `${proccess.env.BASE_URL}/api/signOut`,
+      `${process.env.BASE_URL}/api/signOut`,
       {
         method: "POST",
       }

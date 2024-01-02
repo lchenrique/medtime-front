@@ -4,7 +4,7 @@ import { MedItem } from "@/components/MedItem";
 export interface IHomeProps {}
 const getData = async () => {
   const data = await fetch(
-    `${proccess.env.BASE_URL}/api/medicines`,
+    `${process.env.BASE_URL}/api/medicines`,
     {
       method: "GET",
       cache: "no-cache",

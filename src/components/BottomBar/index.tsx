@@ -51,7 +51,7 @@ function BottomBar() {
 
   const agendar = async () => {
     const data = await fetch(
-      `${proccess.env.BASE_URL}/agendar-lembrete`,
+      `${process.env.BASE_URL}/agendar-lembrete`,
       {
         method: "POST",
         headers: {
