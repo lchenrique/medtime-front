@@ -1,38 +1,51 @@
-import { NextRequest, NextResponse } from "next/server";
+import NextAuth from "next-auth";
 
-export default async function middleware(req: NextRequest) {
-  const session = req.cookies.get("session");
+import authConfig from "@/auth.config";
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  apiAuthPrefix,
+  authRoutes,
+  publicRoutes,
+} from "@/routes";
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/login", req.url));
+const { auth } = NextAuth(authConfig);
+
+export default auth((req) => {
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  if (isApiAuthRoute) {
+    return null;
   }
 
-  //   if (session && req.nextUrl.pathname === "/login") {
-  //     return NextResponse.redirect(new URL("/home", req.url));
-  //   }
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
+  }
 
-  //   if (session && req.nextUrl.pathname === "/") {
-  //     return NextResponse.redirect(new URL("/home", req.url));
-  //   }
-  //   if (!session && req.nextUrl.pathname !== "/login") {
-  //     return NextResponse.redirect(new URL("/login", req.url));
-  //   }
+  if (!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
 
-  //Call the authentication endpoint
-  //   const responseAPI = await fetch("http://localhost:8080/api/login", {
-  //     method: "GET",
-  //     headers: {
-  //       Cookie: `session=${session?.value}`,
-  //     },
-  //   });
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
-  //   console.log("responseAPI", responseAPI.status);
-  //   //Return to /login if token is not authorized
-  //   if (responseAPI.status !== 200) {
-  //     return NextResponse.redirect(new URL("/", req.url));
-  //   }
-}
+    return Response.redirect(
+      new URL(`/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    );
+  }
 
+  return null;
+});
+
+// Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ["/home", "/"],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

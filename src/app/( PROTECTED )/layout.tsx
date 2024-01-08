@@ -6,12 +6,21 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Header } from "@/components/Header";
 import { BottomBar } from "@/components/BottomBar";
-import { Loading } from "react-daisyui";
+import { Card, Loading } from "react-daisyui";
 import { usePageTransition } from "@/hooks/usePageTransition";
+import { useSession } from "next-auth/react";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 const BaseLayout = ({ children }: any) => {
   const { loading } = useAuth();
-
+  const session = useSession();
+  console.log("session", session);
   return (
     <>
       {loading ? (
@@ -21,6 +30,7 @@ const BaseLayout = ({ children }: any) => {
       ) : (
         <div className=" w-full flex flex-col ga-3  gap-4 pb-24">
           <Header />
+
           <div className="h-full px-3 pt-20">{children}</div>
 
           <BottomBar />

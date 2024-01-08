@@ -16,6 +16,7 @@ const formatAuthUser = (user: any) => ({
   uid: user.uid,
   email: user.email,
   avatar: user.photoURL,
+  name: user.displayName,
 });
 const useAuth = () => {
   const [user, setUser] = useState<any>();
@@ -38,7 +39,10 @@ const useAuth = () => {
           Authorization: `Bearer ${await userCred.user.getIdToken()}`,
         },
       }).then((response) => {
+        console.log("responsee", response);
         if (response.status === 200) {
+          router.push("/home");
+          setLoading(false);
         }
       });
     });
@@ -54,12 +58,9 @@ const useAuth = () => {
     await signOut(auth);
 
     //Clear the cookies in the server
-    const response = await fetch(
-      `${process.env.BASE_URL}/api/signOut`,
-      {
-        method: "POST",
-      }
-    );
+    const response = await fetch(`${process.env.BASE_URL}/api/signOut`, {
+      method: "POST",
+    });
 
     if (response.status === 200) {
       router.push("/login");

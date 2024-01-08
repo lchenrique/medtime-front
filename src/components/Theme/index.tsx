@@ -8,8 +8,8 @@ export interface IThemeWrapperProps {
 
 const ThemeWrapper = (props: IThemeWrapperProps) => {
   return (
-    <Theme dataTheme="light">
-      <div className="flex min-h-screen flex-col items-center justify-start">
+    <Theme dataTheme="light" className="h-full">
+      <div className="flex h-full flex-col items-center justify-center">
         {props.children}
       </div>
     </Theme>

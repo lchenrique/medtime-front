@@ -1,41 +1,29 @@
+import { IInputBaseProps, InputBase } from "@/components/input-base";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/utils";
+import React from "react";
 import { ReactNode } from "react";
-import { Input } from "react-daisyui";
+import { FieldValues } from "react-hook-form";
 
-type TDaisyUIInput = Parameters<typeof Input>[0];
+type IInput = Parameters<typeof Input>[0];
+export interface ITextInputProps<T extends FieldValues>
+  extends Omit<IInputBaseProps<T>, "component">,
+    Omit<IInput, "name"> {}
 
-export interface ITextInputProps extends TDaisyUIInput {
-  label?: ReactNode;
-  invalid?: ReactNode;
-  placeholder?: string;
-}
-
-const TextInput = ({
-  label,
-  invalid,
-  className,
-  ...props
-}: ITextInputProps) => {
+const TextInputBase = <T extends FieldValues>(
+  { label, name, control, ...props }: ITextInputProps<T>,
+  ref: any
+) => {
   return (
-    <div className="form-control w-full ">
-      {label && (
-        <label className="label">
-          <div className="label-text text-lg">{label}</div>
-        </label>
-      )}
-      <Input
-        className={cn("w-full", className)}
-        color={invalid ? "error" : "neutral"}
-        size="lg"
-        {...props}
-      />
-      {invalid && (
-        <label className="label">
-          <span className="label-text-alt text-status-error">{invalid}</span>
-        </label>
-      )}
-    </div>
+    <InputBase
+      label={label}
+      name={name}
+      control={control}
+      component={(fields) => {
+        return <Input {...fields} {...props} />;
+      }}
+    />
   );
 };
 
-export { TextInput };
+export const TextInput = React.forwardRef(TextInputBase);
