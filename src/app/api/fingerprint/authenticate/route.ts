@@ -1,13 +1,9 @@
-import { getSession } from "@/app/lib/session";
 import { env } from "@/env";
 import { db } from "@/lib/db";
 import { fido } from "@/lib/fido";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { bufferToBase64 } from "@/utils";
-import { signIn } from "@/auth";
 export async function POST(request: any, res: any) {
   const cookieStore = cookies().get("session");
 

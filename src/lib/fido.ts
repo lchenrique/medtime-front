@@ -1,8 +1,9 @@
+import { env } from "@/env";
 import { Fido2Lib } from "fido2-lib";
 
 export const fido = new Fido2Lib({
   timeout: 60000,
-  rpId: "ewe-simple-polecat.ngrok-free.app",
+  rpId: env.BASE_NAME,
   rpName: "Medtime",
   rpIcon: "/icon-512x512.png",
   challengeSize: 128,
