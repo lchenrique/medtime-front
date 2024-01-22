@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl":".",
+    "baseUrl":"./src/",
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -20,9 +20,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/hooks/*": ["./src/hooks/*"],
+      "@/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
