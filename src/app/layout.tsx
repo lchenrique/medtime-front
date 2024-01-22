@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { BottomBar } from "@/components/BottomBar";
 import { cn } from "@/utils";
-import { AuthUserProvider } from "@/context/auth.context";
-import { Theme } from "react-daisyui";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { ThemeWrapper } from "@/components/Theme";
-import { SessionProvider } from "next-auth/react";
-import SessionWrapper from "@/components/SessionWrapper";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,15 +17,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SessionWrapper>
-      <html lang="pt-BR">
+      <html lang="pt-BR" suppressHydrationWarning={true} >
         <head>
           <link rel="manifest" href="/manifest.json" />
         </head>
-        <body className={cn(inter.className, "h-screen")}>
-          <ThemeWrapper>{children}</ThemeWrapper>
+        <body suppressHydrationWarning={true} className={cn(inter.className, "h-screen overflow-hidden")}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex h-full flex-col items-center justify-center">
+              {children}
+            </div>
+          </ThemeProvider>
         </body>
       </html>
-    </SessionWrapper>
   );
 }

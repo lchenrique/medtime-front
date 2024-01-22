@@ -7,3 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
   return twMerge(clsx(inputs));
 }
+
+
+export const bufferToBase64 = (buffer:any) => btoa(String.fromCharCode(...new Uint8Array(buffer)));
+export const base64ToBuffer = (base64:any) => Uint8Array.from(atob(base64), c => c.charCodeAt(0));

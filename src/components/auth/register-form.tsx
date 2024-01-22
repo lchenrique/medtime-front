@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/form/form-error";
+import { FormSuccess } from "@/components/form/form-success";
 import { register } from "@/actions/register";
-import { TextInput } from "@/components/TextInput";
+import { TextInput } from "@/components/form/text-input";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -50,8 +50,8 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Create an account"
-      backButtonLabel="Already have an account?"
+      headerLabel="Criar uma conta"
+      backButtonLabel="Já tem uma conta?"
       backButtonHref="/login"
       showSocial
     >
@@ -68,8 +68,8 @@ export const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPending} type="submit" className="w-full">
-            Create an account
+          <Button disabled={isPending} loading={isPending} type="submit" className="w-full">
+            Criar conta
           </Button>
         </form>
       </Form>

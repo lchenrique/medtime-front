@@ -55,6 +55,7 @@ export const LoginSchema = z.object({
     message: "Password is required",
   }),
   code: z.optional(z.string()),
+  fingerprint: z.optional(z.string()),
 });
 
 export const RegisterSchema = z.object({
@@ -68,3 +69,14 @@ export const RegisterSchema = z.object({
     message: "Name is required",
   }),
 });
+
+
+export const CreateMedicine = z.object({
+  name: z.string(),
+  description: z.string(),
+  qtsTime: z.string(),
+  qtsDays:z.number(),
+  startTime: z.string(),
+  startDate: z.string(),
+});
+

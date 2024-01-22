@@ -13,6 +13,8 @@ import { getUserByEmail } from "@/data/user";
 //   sendTwoFactorTokenEmail,
 // } from "@/lib/mail";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/email";
 // import {
 //   generateVerificationToken,
 //   generateTwoFactorToken
@@ -39,26 +41,25 @@ export const login = async (
     return { error: "Email does not exist!" };
   }
 
-  console.log("(existingUser as any)?.accounts", existingUser as any);
-  if ((existingUser as any)?.accounts && !existingUser.password) {
-    return {
-      error: `Email already in use with ${
-        (existingUser as any)?.accounts[0].provider
-      } account!`,
-    };
-  }
-  //   if (!existingUser.emailVerified) {
-  //     const verificationToken = await generateVerificationToken(
-  //       existingUser.email,
-  //     );
+  // if ((existingUser as any)?.accounts && !existingUser.password) {
+  //   return {
+  //     error: `Email already in use with ${
+  //       (existingUser as any)?.accounts[0].provider
+  //     } account!`,
+  //   };
+  // }
+    if (!existingUser.emailVerified) {
+      const verificationToken = await generateVerificationToken(
+        existingUser.email,
+      );
 
-  //     await sendVerificationEmail(
-  //       verificationToken.email,
-  //       verificationToken.token,
-  //     );
+      await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token,
+      );
 
-  //     return { success: "Confirmation email sent!" };
-  //   }
+      return { success: "Email de confirmação enviado!"  };
+    }
 
   //   if (existingUser.isTwoFactorEnabled && existingUser.email) {
   //     if (code) {
@@ -112,10 +113,10 @@ export const login = async (
 
   try {
     await signIn("credentials", {
-      email,
-      password,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-    });
+    email,
+    password,
+    redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+  });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

@@ -2,21 +2,26 @@ import NextAuth from "next-auth";
 
 import authConfig from "@/auth.config";
 import {
+  BLOCK_URLS,
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
 } from "@/routes";
+import useAuthStore from "./store/user";
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  const { nextUrl } = req;
+  
+  const { nextUrl, body} = req;
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  const isBlock = BLOCK_URLS.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
     return null;
@@ -30,7 +35,9 @@ export default auth((req) => {
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    let callbackUrl = nextUrl.pathname;
+    let callbackUrl =
+      nextUrl.pathname === "/" ? DEFAULT_LOGIN_REDIRECT : nextUrl.pathname;
+
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;
     }
@@ -40,6 +47,11 @@ export default auth((req) => {
     return Response.redirect(
       new URL(`/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
+  }
+
+  if (isLoggedIn && isBlock) {
+    // useAuthStore.setState({user: req.auth?.user});
+    return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
   }
 
   return null;

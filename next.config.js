@@ -10,6 +10,7 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig = {
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
