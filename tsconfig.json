@@ -22,7 +22,10 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["src/components/*"],
+      "@/actions/*": ["src/actions/*"],
+      "@/hooks/*": ["src/hooks/*"],
      "@/lib/utils": ["src/lib/utils/*"],
+     "@/utils": ["src/utils/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
