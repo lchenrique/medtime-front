@@ -1,9 +1,7 @@
 import { Profile } from "@/components/profile/profile";
 import { ProfileFlex } from "@/components/profile/profile-flex";
-import { ModeToggle } from "@/components/theme/mode";
-import { CardTitle, CardDescription } from "@/components/ui/card";
 import { currentUser } from "@/lib/auth";
-import useAuthStore from "@/store/user";
+import { ModeToggle } from "../theme/mode";
 
 export interface IProfileInfoProps {}
 
