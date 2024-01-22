@@ -8,7 +8,6 @@ import {
 import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";
 import { BackButton } from "@/components/auth/back-button";
-import { ModeToggle } from "../theme/mode";
 
 interface CardWrapperProps {
   children: React.ReactNode;
@@ -38,7 +37,7 @@ const CardWrapper = ({
       )}
       <CardFooter>
         <BackButton label={backButtonLabel} href={backButtonHref} />
-        <ModeToggle />
+        {/* <ModeToggle /> */}
       </CardFooter>
     </Card>
   );
