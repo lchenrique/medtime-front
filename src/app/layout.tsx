@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/utils";
-import { ThemeProvider } from "../components/theme/theme-provider";
+// import { ThemeProvider } from "../components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,16 +22,16 @@ export default async function RootLayout({
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body suppressHydrationWarning={true} className={cn(inter.className, "h-screen overflow-hidden")}>
-          <ThemeProvider
+          {/* <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          >
+          > */}
             <div className="flex h-full flex-col items-center justify-center">
               {children}
             </div>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </body>
       </html>
   );
